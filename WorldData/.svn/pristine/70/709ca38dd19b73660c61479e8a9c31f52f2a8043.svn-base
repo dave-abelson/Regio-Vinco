@@ -1,0 +1,40 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package world_data.test_bed;
+
+
+import world_data.WorldDataManager;
+import xml_utilities.InvalidXMLFileFormatException;
+
+/**
+ *
+ *  @author Richard McKenna
+ *          Debugging Enterprises
+ *          Version 1.0
+ */
+public class WorldDataTestBed 
+{
+    public static final String HELLO_WORLD_DATA_PATH = "./data/";
+    public static final String HELLO_WORLD_REGIONS_LIST = "HelloWorldRegionsList.xml";
+    public static final String HELLO_WORLD_REGIONS_MAPPINGS = "HelloWorldRegionsMappings.xml";
+    
+    public static void main(String[] args)
+    {
+        WorldDataManager wdm = new WorldDataManager();
+        
+/*        try
+        {
+            
+             wdm.loadWorld(HELLO_WORLD_DATA_PATH, HELLO_WORLD_REGIONS_LIST, HELLO_WORLD_REGIONS_MAPPINGS);
+        }
+        catch(InvalidXMLFileFormatException ixfee)
+        {
+            System.out.println("ERROR");
+        }
+        System.out.println("TESTING");
+
+*/
+    }
+}

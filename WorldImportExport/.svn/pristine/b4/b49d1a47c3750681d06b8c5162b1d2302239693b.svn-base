@@ -1,0 +1,35 @@
+package world_io;
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author McKillaGorilla
+ */
+public class WorldSettings
+{
+   // NOW THE XML-PROCESSING STUFF
+    // FILES
+    public static final String  WORLD_REGIONS_SCHEMA = "WorldRegions.xsd";
+    
+    // CONSTANTS FOR LOADING DATA FROM THE XML FILES
+    public static final String WORLD_ID = "World";
+    public static final String WORLD_REGIONS_NODE = "world_regions";
+    public static final String REGIONS_LIST_NODE = "regions_list";
+    public static final String REGIONS_MAPPINGS_NODE = "regions_mappings";
+    public static final String REGION_NODE = "region";
+    public static final String SUB_REGION_NODE = "sub_region";
+    public static final String ID_ATTRIBUTE = "id";
+    public static final String NAME_ATTRIBUTE = "name";
+    public static final String TYPE_ATTRIBUTE = "type";
+    public static final String CAPITAL_ATTRIBUTE = "capital";
+
+    // FOR NICELY FORMATTED XML OUTPUT
+    public static final String XML_INDENT_PROPERTY = "{http://xml.apache.org/xslt}indent-amount";
+    public static final String XML_INDENT_VALUE = "5";
+    public static final String YES_VALUE = "yes";
+    
+}

@@ -309,7 +309,7 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
     /**
      * Resets all the game data so that a brand new game may be played.
      *
-     * @param game the Zombiquarium game in progress
+     * @param game the RegioVinco game in progress
      */
     @Override
     public void reset(PointAndClickGame game) {

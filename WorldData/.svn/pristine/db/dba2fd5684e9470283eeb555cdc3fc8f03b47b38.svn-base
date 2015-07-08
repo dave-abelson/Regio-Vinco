@@ -1,0 +1,93 @@
+package world_data;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+/**
+ *
+ * @author McKillaGorilla
+ */
+public class Region<T extends Comparable<T>> implements Comparable<Region<T>>
+{
+    private String id;
+    private String name;
+    private String capital;
+    private RegionType type;
+    private Region parentRegion;
+    private ArrayList<Region> subRegions;
+    
+    public Region(String initId, String initName, RegionType initType)
+    {
+        id = initId;
+        name = initName;
+        type = initType;
+        parentRegion = null;
+        capital = null;
+        subRegions = new ArrayList();
+    }
+    
+    public Region(String initId, String initName, RegionType initType, String initCapital)
+    {
+        this(initId, initName, initType);
+        capital = initCapital;
+    }
+    
+    public boolean hasSubRegions()
+    {
+        return !subRegions.isEmpty();
+    }
+    
+    public void removeSubRegion(Region subRegionToRemove)
+    {
+        subRegions.remove(subRegionToRemove.name);
+    }
+
+    public String       getId()             { return id;            }
+    public String       getName()           { return name;          }
+    public RegionType   getType()           { return type;          }
+    public Region       getParentRegion()   { return parentRegion;  }
+    public String       getCapital()        { return capital;       }
+    
+    public boolean      hasCapital() { return capital != null; }
+    public Region getSubRegion(String subRegionName)
+    {
+        Iterator it = subRegions.iterator();
+        while (it.hasNext())
+        {
+            Region subRegion = (Region)it.next();
+            if (subRegion.name.equals(subRegionName))
+                return subRegion;
+        }
+        return null;
+    }
+    
+    public void addSubRegion(Region subRegionToAdd)
+    {
+        subRegions.add(subRegionToAdd);
+        Collections.sort(subRegions);
+    }
+    
+    public Iterator<Region> getSubRegions()
+    {
+        return subRegions.iterator();
+    }
+    
+    public void setParentRegion(Region initParentRegion)
+    {
+        parentRegion = initParentRegion;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return name;
+    }
+    
+    public int compareTo(Region<T> region)
+    {
+        return id.compareTo(region.id);
+    }
+}

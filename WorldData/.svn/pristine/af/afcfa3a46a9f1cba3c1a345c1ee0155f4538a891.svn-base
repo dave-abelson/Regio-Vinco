@@ -1,0 +1,18 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package world_data;
+
+/**
+ *
+ * @author McKillaGorilla
+ */
+public enum RegionType 
+{
+    WORLD,
+    CONTINENT,
+    NATION,
+    STATE,
+    COUNTY
+}
