@@ -29,6 +29,9 @@ public class RegioVinco extends Application {
     public static final String XML_PATH = "./data/xml/";
     public static final String XML_FILE_PATH = " Data.xml";
     
+    public static final String DATA_PATH = "./data/";
+    public static final String CONTINENT_DATA_PATH = "./data/The World/";
+    
     // FOR THIS APP WE'RE ONLY PLAYING WITH ONE MAP, BUT
     // IN THE FUTURE OUR GAMES WILL USE LOTS OF THEM
     public static final String REGION_NAME = "Afghanistan";
@@ -53,6 +56,16 @@ public class RegioVinco extends Application {
     public static final String SETTINGS_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoSettingsButton.png";
     public static final String HELP_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoHelpButton.png";
     public static final String RETURN_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoReturnButton.png";
+    public static final String NAME_MODE_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoNameModeButton.png";
+    public static final String CAPITAL_MODE_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoCapitalModeButton.png";
+    public static final String FLAG_MODE_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoFlagModeButton.png";
+    public static final String LEADER_MODE_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoLeaderModeButton.png";
+    public static final String STOP_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoStopButton.png";
+    public static final String SOUND_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoSoundButton.png";
+    public static final String SOUND_OFF_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoSoundOffButton.png";
+    
+    public static final String SOUND_EFFECTS_ON_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoSoundEffectsOnButton.png";
+    public static final String SOUND_EFFECTS_OFF_BUTTON_FILE_PATH = GUI_PATH + "RegioVincoSoundEffectsOffButton.png";
 
     // HERE ARE SOME APP-LEVEL SETTINGS, LIKE THE FRAME RATE. ALSO,
     // WE WILL BE LOADING SpriteType DATA FROM A FILE, SO THAT FILE
@@ -86,6 +99,51 @@ public class RegioVinco extends Application {
     public static final String ENTER_TYPE ="ENTER_TYPE";
     public static final int ENTER_X = 515;
     public static final int ENTER_Y = 625;
+    
+    //NAME MODE BUTTON
+    public static final String NAME_MODE_TYPE = "NAME_MODE_TYPE";
+    public static final int NAME_MODE_X = 900;
+    public static final int NAME_MODE_Y = 130;
+    
+    //CAPITAL MODE BUTTON
+    public static final String CAPITAL_MODE_TYPE = "CAPITAL_MODE_TYPE";
+    public static final int CAPITAL_MODE_X = 960;
+    public static final int CAPITAL_MODE_Y = 130;
+    
+    //FLAG MODE BUTTON
+    public static final String FLAG_MODE_TYPE = "FLAG_MODE_TYPE";
+    public static final int FLAG_MODE_X = 1020;
+    public static final int FLAG_MODE_Y = 130;
+    
+    //LEADER MODE BUTTON
+    public static final String LEADER_MODE_TYPE = "LEADER_MODE_TYPE";
+    public static final int LEADER_MODE_X = 1080;
+    public static final int LEADER_MODE_Y = 130;
+    
+    //STOP BUTTON
+    public static final String STOP_TYPE = "STOP_TYPE";
+    public static final int STOP_X = 1140;
+    public static final int STOP_Y = 130;
+    
+    //SOUND BUTTON
+    public static final String SOUND_TYPE = "SOUND_TYPE";
+    public static final int SOUND_X = 300;
+    public static final int SOUND_Y = 300;
+    
+    //SOUND OFF BUTTON
+    public static final String SOUND_OFF_TYPE = "SOUND_OFF_TYPE";
+    public static final int SOUND_OFF_X = 300;
+    public static final int SOUND_OFF_Y = 500;
+    
+    //SOUND EFFECTS ON BUTTON
+    public static final String SOUND_EFFECTS_ON_TYPE = "SOUND_EFFECTS_ON_TYPE";
+    public static final int SOUND_EFFECTS_ON_X = 600;
+    public static final int SOUND_EFFECTS_ON_Y = 300;
+    
+    //SOUND EFFECTS OFF BUTTON
+    public static final String SOUND_EFFECTS_OFF_TYPE = "SOUND_EFFECTS_OFF_TYPE";
+    public static final int SOUND_EFFECTS_OFF_X = 600;
+    public static final int SOUND_EFFECTS_OFF_Y = 500;
     
     //SPLASH TITLE IMAGE
     public static final String SPLASH_TITLE_TYPE = "TITLE_TYPE";
