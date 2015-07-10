@@ -116,6 +116,7 @@ public class RegioVincoGame extends PointAndClickGame {
      */
     private void initAudio() {
 	audio = new AudioManager();
+        musicPlaying = true;
 	try {
 	    audio.loadAudio(TRACKED_SONG, TRACKED_FILE_NAME);
 	    audio.play(TRACKED_SONG, true);
@@ -458,12 +459,12 @@ public class RegioVincoGame extends PointAndClickGame {
         
         Button soundButton = guiButtons.get(SOUND_TYPE);
         soundButton.setOnAction(e-> {
-            //controller.processSoundRequest();
+            controller.processSoundRequest();
         });
         
         Button soundOffButton = guiButtons.get(SOUND_OFF_TYPE);
         soundOffButton.setOnAction(e-> {
-            //controller.processSoundOffRequest();
+            controller.processSoundOffRequest();
         });
         
         Button soundEffectsOnButton = guiButtons.get(SOUND_EFFECTS_ON_TYPE);
@@ -563,6 +564,17 @@ public class RegioVincoGame extends PointAndClickGame {
     public void returnButton(){
         helpScreen.setVisible(false);
         settingsScreen.setVisible(false);
+    }
+    
+    public void soundOnRequest(){
+        if(!musicPlaying){
+            audio.play(TRACKED_SONG, true);
+        }
+    }
+    
+    public void soundOffRequest(){
+        musicPlaying = false;
+        audio.stop(TRACKED_SONG);
     }
     /**
      * This mutator method changes the color of the debug text.
