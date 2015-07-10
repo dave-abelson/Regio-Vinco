@@ -65,8 +65,12 @@ public class RegioVincoGame extends PointAndClickGame {
     WorldDataManager wdm;
     XMLUtilities xml;
     
+    ImageView flag;
+    Label flagLabel;
+    
     String currentRegion;
     String continentRegion;
+    String path;
     
     boolean musicPlaying;
     boolean effectsOn;
@@ -258,7 +262,17 @@ public class RegioVincoGame extends PointAndClickGame {
         guiButtons.get(STOP_TYPE).setPadding(Insets.EMPTY);
         guiButtons.get(STOP_TYPE).setStyle("-fx-background-insets: 0, 0, 1, 2;");
         
+        flagLabel = new Label();
+        flagLabel.setLayoutX(935);
+        flagLabel.setLayoutY(245);
+        flagLabel.setPrefWidth(210);
+        flagLabel.setPrefHeight(140);
+        flagLabel.setStyle("-fx-background-color: WHITE");
+        
+        
         ImageView mapView = new ImageView();
+        flag = new ImageView();
+        
 	mapView.setX(MAP_X);
 	mapView.setY(MAP_Y);
 	guiImages.put(MAP_TYPE, mapView);
@@ -268,6 +282,10 @@ public class RegioVincoGame extends PointAndClickGame {
         navigation.getChildren().add(continentLabel);
         navigation.getChildren().add(countryLabel);
         navigation.getChildren().add(regionLabel);
+        navigation.getChildren().add(flagLabel);
+        navigation.getChildren().add(flag);
+        
+        flagLabel.setVisible(false);
         countryLabel.setVisible(false);
         continentLabel.setVisible(false);
         
@@ -365,7 +383,8 @@ public class RegioVincoGame extends PointAndClickGame {
     }
     
     // HELPER METHOD FOR LOADING IMAGES
-    private Image loadImage(String imagePath) {	
+    //Was private now public
+    public Image loadImage(String imagePath) {	
         File file = new File(imagePath);
         if(!file.exists()){
             return null;
@@ -469,12 +488,12 @@ public class RegioVincoGame extends PointAndClickGame {
         
         Button soundEffectsOnButton = guiButtons.get(SOUND_EFFECTS_ON_TYPE);
         soundEffectsOnButton.setOnAction(e-> {
-            //controller.processSoundEffectsOnRequest();
+            controller.processSoundEffectsOnRequest();
         });
         
         Button soundEffectsOffButton = guiButtons.get(SOUND_EFFECTS_OFF_TYPE);
         soundEffectsOffButton.setOnAction(e-> {
-            //controller.processSoundEffectsOffRequest();
+            controller.processSoundEffectsOffRequest();
         });
 
 	// MAKE THE CONTROLLER THE HOOK FOR KEY PRESSES
@@ -491,6 +510,7 @@ public class RegioVincoGame extends PointAndClickGame {
 	});
         
         mapView.setOnMouseMoved(e -> {
+            
             controller.processMouseMoved((int) e.getX(), (int) e.getY());
         });
 	
@@ -575,6 +595,14 @@ public class RegioVincoGame extends PointAndClickGame {
     public void soundOffRequest(){
         musicPlaying = false;
         audio.stop(TRACKED_SONG);
+    }
+    
+    public void soundEffectsOn(){
+        
+    }
+    
+    public void soundEffectsOff(){
+        
     }
     /**
      * This mutator method changes the color of the debug text.
@@ -668,7 +696,7 @@ public class RegioVincoGame extends PointAndClickGame {
     public void reloadMap(String regionMap) throws InvalidXMLFileFormatException {
         
         currentRegion = regionMap;
-        String path;
+        //String path;
         
         if(regionMap.equals("The World")){
             path = DATA_PATH + "The World/";

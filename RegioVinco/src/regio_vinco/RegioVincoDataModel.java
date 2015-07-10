@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -43,7 +44,7 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
     Label incorrectGuessesLabel;
     
     //Label regionLabel = new Label();
-    
+    //ImageView flag = new ImageView();
     
     long finishTime; 
     static long timePassed;
@@ -198,18 +199,38 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
     }
     
     public void mouseMoved(RegioVincoGame game, int x, int y){
+        String flagPath;
+        
         Color pixelColor = mapPixelReader.getColor(x, y);
         String overSubRegion = colorToSubRegionMappings.get(pixelColor);
+        
+        flagPath = game.path + overSubRegion + "/" + overSubRegion + " flag.png";
+        game.flag.setImage(game.loadImage(flagPath));
+            
         if(overSubRegion == null){
+            System.out.println(overSubRegion + " OverSubRegion");
             game.regionLabel.setVisible(false);
+            game.flag.setVisible(false);
+//            game.flagLabel.setVisible(false);
+//            game.flagLabel.setStyle("-fx-background-color: transparent");
         }
         if(pixelColor != Color.PINK){
+            game.flag.setVisible(true);
+//            game.flagLabel.setVisible(true);
+            //game.flagLabel.setStyle("-fx-background-color: white");
             game.regionLabel.setVisible(true);
             game.regionLabel.setText(overSubRegion);
             game.regionLabel.setFont(Font.font("Serif", 25));
             game.regionLabel.setTextFill(Color.WHITE);
-            game.regionLabel.setLayoutX(1000);
-            game.regionLabel.setLayoutY(250);
+            game.regionLabel.setLayoutX(900);
+            game.regionLabel.setLayoutY(410);
+            
+            System.out.println(flagPath);
+            
+            //game.navigation.getChildren().add(flag);
+            
+            game.flag.setLayoutX(940);
+            game.flag.setLayoutY(205);
         }
     }
     
@@ -236,8 +257,10 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	    // YAY, CORRECT ANSWER
             regionsFoundNum++;
             regionsLeftNum--;
-	    game.getAudio().play(SUCCESS, false);
-
+            if(((RegioVincoGame) game).effectsOn){
+                game.getAudio().play(SUCCESS, false);
+            }
+                
 	    // TURN THE TERRITORY GREEN
 	    changeSubRegionColorOnMap(game, clickedSubRegion, Color.GREEN);
             
@@ -277,7 +300,9 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	} else {
 	    if (!redSubRegions.contains(clickedSubRegion)) {
 		// BOO WRONG ANSWER
-		game.getAudio().play(FAILURE, false);
+                if(((RegioVincoGame) game).effectsOn){
+                    game.getAudio().play(FAILURE, false);
+                }
                 incorrectGuessesNum++;
 		// TURN THE TERRITORY TEMPORARILY RED
 		changeSubRegionColorOnMap(game, clickedSubRegion, Color.RED);

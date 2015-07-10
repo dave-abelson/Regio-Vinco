@@ -44,6 +44,14 @@ public class RegioVincoController implements KeyPressHook {
         game.soundOffRequest();
     }
     
+    public void processSoundEffectsOnRequest(){
+        game.soundEffectsOn();
+    }
+    
+    public void processSoundEffectsOffRequest(){
+        game.soundEffectsOff();
+    }
+    
     public void processReturnRequest(){
         game.returnButton();
     }
