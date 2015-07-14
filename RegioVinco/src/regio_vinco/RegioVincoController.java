@@ -57,7 +57,13 @@ public class RegioVincoController implements KeyPressHook {
     }
     
     public void processMapClickRequest(int x, int y) throws InvalidXMLFileFormatException {
-	((RegioVincoDataModel)game.getDataModel()).navigationMapSelection(game, x, y);
+	
+        if(game.gameOn){
+            ((RegioVincoDataModel)game.getDataModel()).respondToMapSelection(game, x, y);
+        }
+        else{
+            ((RegioVincoDataModel)game.getDataModel()).navigationMapSelection(game, x, y);
+        }
     }
     
     public void processWorldLabel() throws InvalidXMLFileFormatException{
@@ -76,7 +82,46 @@ public class RegioVincoController implements KeyPressHook {
         ((RegioVincoDataModel)game.getDataModel()).mouseMoved(game, x, y);
     }
     
+    public void processNameModeRequest(){
+        //System.out.println("anything");
+        game.gameOn = true;
+        game.gameMode = "NAME";
+        game.gameLayer.setVisible(true);
+        game.guiLayer.setVisible(true);
+       ((RegioVincoDataModel)game.getDataModel()).reset(game);
+    }
+    
+    public void processCapitalModeRequest(){
+        System.out.println("CAPITAL");
+        game.gameMode = "CAPITAL";
+        game.gameOn = true;
+        game.gameLayer.setVisible(true);
+        game.guiLayer.setVisible(true);
+       ((RegioVincoDataModel)game.getDataModel()).reset(game);
+    }
+    
+    public void processLeaderModeRequest(){
+        game.gameMode = "LEADER";   
+        game.gameOn = true;
+        game.gameLayer.setVisible(true);
+        game.guiLayer.setVisible(true);
+       ((RegioVincoDataModel)game.getDataModel()).reset(game);
+    }
+    
+    public void processFlagModeRequest(){
+        game.gameMode = "FLAG";
+        game.gameOn = true;
+        game.gameLayer.setVisible(true);
+        game.guiLayer.setVisible(true);
+       ((RegioVincoDataModel)game.getDataModel()).reset(game);
+    }
+    
+    public void processStopRequest() throws InvalidXMLFileFormatException{
+        game.stopGame();
+    }
+    
     @Override
+    
     public void processKeyPressHook(KeyEvent ke)
     {
         KeyCode keyCode = ke.getCode();

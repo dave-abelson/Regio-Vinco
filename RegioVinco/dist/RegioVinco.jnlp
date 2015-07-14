@@ -11,11 +11,11 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="RegioVinco.jar" size="25291" download="eager" />
+    <jar href="RegioVinco.jar" size="27117" download="eager" />
     <jar href="lib/AudioManager.jar" size="5195" download="eager" />
     <jar href="lib/The_PACG_Framework.jar" size="15358" download="eager" />
-    <jar href="lib/WorldData.jar" size="12096" download="eager" />
-    <jar href="lib/WorldImportExport.jar" size="11205" download="eager" />
+    <jar href="lib/WorldData.jar" size="12034" download="eager" />
+    <jar href="lib/WorldImportExport.jar" size="11492" download="eager" />
     <jar href="lib/XMLUtilities.jar" size="7418" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="RegioVinco" >

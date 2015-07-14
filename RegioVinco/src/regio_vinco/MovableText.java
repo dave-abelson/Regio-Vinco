@@ -1,6 +1,8 @@
 package regio_vinco;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
 /**
@@ -11,6 +13,7 @@ public class MovableText {
     // A JAVAFX TEXT NODE IN THE SCENE GRAPH
     protected Text text;
     protected Label label;
+    protected Image image;
     
     // USED FOR MANAGING NODE MOVEMENT
     protected double[] velocity = new double[2];
@@ -27,10 +30,24 @@ public class MovableText {
         label = initLabel;
     }
     
+    public MovableText(Text initText, Label initLabel, Image initImage) {
+	text = initText;
+        label = initLabel;
+        image = initImage;
+    }
+    
     // ACCESSOR AND MUTATOR METHODS
     
     public Text getText() {
 	return text;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
     
     public void setText(Text initText) {
