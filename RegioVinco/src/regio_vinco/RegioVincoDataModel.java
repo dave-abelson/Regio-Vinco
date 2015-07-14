@@ -1,6 +1,7 @@
 package regio_vinco;
 
 import audio_manager.AudioManager;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -19,6 +20,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import pacg.PointAndClickGame;
 import pacg.PointAndClickGameDataModel;
 import static regio_vinco.RegioVinco.*;
@@ -251,7 +256,7 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
         
         System.out.println("selected");
     }
-    public void respondToMapSelection(RegioVincoGame game, int x, int y) {
+    public void respondToMapSelection(RegioVincoGame game, int x, int y) throws UnsupportedAudioFileException, IOException {
         // THIS IS WHERE WE'LL CHECK TO SEE IF THE
 	// PLAYER CLICKED NO THE CORRECT SUBREGION
 	Color pixelColor = mapPixelReader.getColor(x, y);
@@ -332,7 +337,42 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                 game.winScreen.setVisible(true);
                 //game.writeHighScoreFile();
 		game.getAudio().stop(TRACKED_SONG);
-		game.getAudio().play(AFGHAN_ANTHEM, false);
+		//game.getAudio().play(AFGHAN_ANTHEM, false);
+                
+                if(clickedSubRegion.equals("Africa") || clickedSubRegion.equals("Antarctica") || clickedSubRegion.equals("Asia") || clickedSubRegion.equals("Europe") || clickedSubRegion.equals("North America") || clickedSubRegion.equals("South America")){
+                    try {
+                        game.getAudio().loadAudio("HARRY_POTTER", MUSIC_FILE_NAME);
+                        game.getAudio().play("HARRY_POTTER", true);
+                    } catch (LineUnavailableException ex) {
+                        
+                    } catch (InvalidMidiDataException ex) {
+                    } catch (MidiUnavailableException ex) {
+                    }
+                    
+                }
+                else if(clickedSubRegion.equals("The World")){
+                    try {
+                        game.getAudio().loadAudio("HARRY_POTTER", MUSIC_FILE_NAME);
+                        game.getAudio().play("HARRY_POTTER", true);
+                    } catch (LineUnavailableException ex) {
+                        
+                    } catch (InvalidMidiDataException ex) {
+                    } catch (MidiUnavailableException ex) {
+                    }
+                }
+                else{
+                    String musicPath = game.path + game.currentRegion + " National Anthem.mid";
+                    try {
+                        game.getAudio().loadAudio("ANTHEM", musicPath);
+                        System.out.println(musicPath);
+                        game.getAudio().play("ANTHEM", false);
+                    } catch (LineUnavailableException ex) {
+                    } catch (InvalidMidiDataException ex) {
+                    } catch (MidiUnavailableException ex) {
+                    }
+                    
+                }
+                
 	    }
 	} else {
 	    if (!redSubRegions.contains(clickedSubRegion)) {
@@ -471,25 +511,30 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                 }
             }
             else if(((RegioVincoGame)game).gameMode.equals("FLAG")){
-                textNode = new Text();
-                //flagView = new ImageView();
-                flagView.setImage(((RegioVincoGame)game).getFlag(subRegion));
-                textLabel.setGraphic(flagView);
+                if(((RegioVincoGame)game).getFlag(subRegion) != null){
+                    textNode = new Text();
+                    //flagView = new ImageView();
+                    flagView.setImage(((RegioVincoGame)game).getFlag(subRegion));
+                    textLabel.setGraphic(flagView);
+                }
+                else{
+                    continue;
+                }
             }
             else{
                 textNode = new Text(subRegion);
             }
             if(!(((RegioVincoGame)game).gameMode.equals("FLAG"))){
-                if(((RegioVincoGame)game).getLeader(subRegion) != null){
+                
                     textLabel.setGraphic(textNode);
-                }
+                
             }
 	    //gameLayer.getChildren().add(textLabel);
             MovableText subRegionText;
             if(!(((RegioVincoGame)game).gameMode.equals("FLAG"))){
                 subRegionText = new MovableText(textNode, textLabel);
             }
-            else{
+            else {
                 subRegionText = new MovableText(textNode, textLabel, ((RegioVincoGame)game).getFlag(subRegion));
             }
             textLabel.setPrefSize(300, 50);

@@ -186,7 +186,7 @@ public class RegioVincoGame extends PointAndClickGame {
 	    audio.loadAudio(TRACKED_SONG, TRACKED_FILE_NAME);
 	    audio.play(TRACKED_SONG, true);
 
-	    audio.loadAudio(AFGHAN_ANTHEM, AFGHAN_ANTHEM_FILE_NAME);
+	    audio.loadAudio(AFGHAN_ANTHEM, MUSIC_FILE_NAME);
 	    audio.loadAudio(SUCCESS, SUCCESS_FILE_NAME);
 	    audio.loadAudio(FAILURE, FAILURE_FILE_NAME);
 	} catch (Exception e) {

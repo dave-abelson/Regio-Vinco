@@ -190,7 +190,7 @@ public class RegioVinco extends Application {
     public static final int FIRST_REGION_Y_IN_STACK = GAME_HEIGHT - 50;
 
     public static final String AUDIO_DIR = "./data/audio/";
-    public static final String AFGHAN_ANTHEM_FILE_NAME = AUDIO_DIR + "AfghanistanNationalAnthem.mid";
+    public static final String MUSIC_FILE_NAME = AUDIO_DIR + "HarryPotter.mid";
     public static final String SUCCESS_FILE_NAME = AUDIO_DIR + "Success.wav";
     public static final String FAILURE_FILE_NAME = AUDIO_DIR + "Failure.wav";
     public static final String TRACKED_FILE_NAME = AUDIO_DIR + "Tracked.wav";
