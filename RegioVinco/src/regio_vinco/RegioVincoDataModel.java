@@ -101,14 +101,16 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
             subRegionStack.removeFirst();
             
 	    // TURN THE TERRITORY GREEN
-           changeSubRegionColorOnMap(game, firstLabel.getText().getText(), Color.GREEN);
+            //needs to accomodate leader, capital and flag
+           changeSubRegionColorOnMap(game, firstLabel.getRegion(), Color.GREEN);
             
 	
         }
+        //needs to accomodate leader, capital and flag
          MovableText lastOne = subRegionStack.peekFirst();
-            String lastRegion = lastOne.getText().getText();
+            String lastRegion = lastOne.getRegion();
             if(redSubRegions.contains(lastRegion)){
-                changeSubRegionColorOnMap(game, lastRegion, subRegionToColorMappings.get(lastRegion));
+                changeSubRegionColorOnMap(game, lastOne.getRegion(), subRegionToColorMappings.get(lastRegion));
             }
         
 	startTextStackMovingDown();
@@ -254,8 +256,9 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
         colorToSubRegionMappings.clear();
         ((RegioVincoGame) game).reloadMap(clickedSubRegion, true);
         
-        System.out.println("selected");
+        //System.out.println("selected");
     }
+    
     public void respondToMapSelection(RegioVincoGame game, int x, int y){
         // THIS IS WHERE WE'LL CHECK TO SEE IF THE
 	// PLAYER CLICKED NO THE CORRECT SUBREGION
@@ -274,7 +277,10 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
         }
         //flag mode
         if(game.gameMode.equals("FLAG")){
-            if(game.getFlagPath(clickedSubRegion).equals(game.getFlagPath(subRegionStack.get(0).getText().getText()))){
+//            if(game.getFlagPath(clickedSubRegion).equals(game.getFlagPath(subRegionStack.get(0).getText().getText()))){
+//                correct = true;
+//            }
+            if(clickedSubRegion.equals(subRegionStack.get(0).getRegion())){
                 correct = true;
             }
         }
@@ -341,8 +347,10 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                 
                 if(clickedSubRegion.equals("Africa") || clickedSubRegion.equals("Antarctica") || clickedSubRegion.equals("Asia") || clickedSubRegion.equals("Europe") || clickedSubRegion.equals("North America") || clickedSubRegion.equals("South America")){
                     try {
-                        game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
-                        game.getAudio().play("ANTHEM", true);
+                        if(game.musicPlaying){
+                            game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
+                            game.getAudio().play("ANTHEM", true);
+                        }
                     } catch (LineUnavailableException ex) {
                         
                     } catch (InvalidMidiDataException ex) {
@@ -356,8 +364,10 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                 }
                 else if(clickedSubRegion.equals("The World")){
                     try {
-                        game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
-                        game.getAudio().play("ANTHEM", true);
+                        if(game.musicPlaying){
+                            game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
+                            game.getAudio().play("ANTHEM", true);
+                        }
                     } catch (LineUnavailableException ex) {
                         
                     } catch (InvalidMidiDataException ex) {
@@ -371,9 +381,11 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                 else{
                     String musicPath = game.path + game.currentRegion + " National Anthem.mid";
                     try {
-                        game.getAudio().loadAudio("ANTHEM", musicPath);
-                        System.out.println(musicPath);
-                        game.getAudio().play("ANTHEM", false);
+                        if(game.musicPlaying){
+                            game.getAudio().loadAudio("ANTHEM", musicPath);
+                            //System.out.println(musicPath);
+                            game.getAudio().play("ANTHEM", false);
+                        }
                     } catch (LineUnavailableException ex) {
                     } catch (InvalidMidiDataException ex) {
                     } catch (MidiUnavailableException ex) {
@@ -544,10 +556,10 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	    //gameLayer.getChildren().add(textLabel);
             MovableText subRegionText;
             if(!(((RegioVincoGame)game).gameMode.equals("FLAG"))){
-                subRegionText = new MovableText(textNode, textLabel);
+                subRegionText = new MovableText(textNode, textLabel, subRegion);
             }
             else {
-                subRegionText = new MovableText(textNode, textLabel, ((RegioVincoGame)game).getFlag(subRegion));
+                subRegionText = new MovableText(textNode, textLabel, subRegion, ((RegioVincoGame)game).getFlag(subRegion));
             }
             textLabel.setPrefSize(300, 50);
 	    subRegionText.getText().setFill(Color.BLUE);
@@ -576,16 +588,17 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
             }
         }
         else{
-            int y = STACK_INIT_Y - 50;
-            int yInc = STACK_INIT_Y_INC - 40;
-            
+            int y = STACK_INIT_Y - 80;
+            //int yInc = STACK_INIT_Y_INC - 40;
+            int yInc = STACK_INIT_Y_INC;
             for (MovableText mT : subRegionStack) {
-                int tY = y +yInc;
+                int tY = y + yInc;
                 //y - yInc;
                 mT.getLabel().setLayoutY(tY);
                 //yInc -= 50;
-                yInc -= mT.getImage().getHeight();
-                System.out.println(mT.getImage().getHeight()+  "   Image Height");
+                //yInc -= mT.getImage().getHeight();
+                yInc -= 140;
+                //System.out.println(mT.getImage().getHeight()+  "   Image Height");
             }
         }
         
@@ -686,11 +699,12 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	// RESET THE AUDIO
 	AudioManager audio = ((RegioVincoGame) game).getAudio();
         //change to current theme
-	audio.stop(AFGHAN_ANTHEM);
-
-	if (!audio.isPlaying(TRACKED_SONG)) {
-	    audio.play(TRACKED_SONG, true);
-	}
+	audio.stop("ANTHEM");
+        if(((RegioVincoGame) game).musicPlaying){
+            if (!audio.isPlaying(TRACKED_SONG)) {
+                audio.play(TRACKED_SONG, true);
+            }
+        }
 	// LET'S GO
 	beginGame();
     }
@@ -724,17 +738,31 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	if (!subRegionStack.isEmpty()) {
 	    MovableText bottomOfStack = subRegionStack.get(0);
             bottomOfStack.getLabel().setStyle("-fx-background-color: rgb(" + 0  +", " + 255 + ", " + 0 + ")" );
+            double height = bottomOfStack.getImage().getHeight();
             //bottomOfStack.getText().setFill(Color.color(255.0 , 51.0, 0.0));
             bottomOfStack.getText().setFill(Color.color(255/255.0, 51/255.0, 0/255.0));
 	    double bottomY = bottomOfStack.getLabel().getLayoutY() + bottomOfStack.getLabel().getTranslateY();//fix stopping animation layout plus translation
-	    if (bottomY >= FIRST_REGION_Y_IN_STACK) {
-		double diffY = bottomY - FIRST_REGION_Y_IN_STACK;
-		for (MovableText mT : subRegionStack) {
-		    mT.getLabel().setLayoutY(mT.getLabel().getLayoutY() - diffY);
-		    mT.setVelocityY(0);
-                    //mT.update(percentage);
-		}
-	    }
+	    if(((RegioVincoGame)game).gameMode.equals("FLAG")){
+                //bottomY = GAME_HEIGHT - height;
+                if (bottomY >= (GAME_HEIGHT - height)) {
+                    double diffY = bottomY - (GAME_HEIGHT - height);
+                    for (MovableText mT : subRegionStack) {
+                        mT.getLabel().setLayoutY(mT.getLabel().getLayoutY() - diffY);
+                        mT.setVelocityY(0);
+                        //mT.update(percentage);
+                    }
+                }
+            }
+            else{
+                if (bottomY >= FIRST_REGION_Y_IN_STACK) {
+                    double diffY = bottomY - FIRST_REGION_Y_IN_STACK;
+                    for (MovableText mT : subRegionStack) {
+                        mT.getLabel().setLayoutY(mT.getLabel().getLayoutY() - diffY);
+                        mT.setVelocityY(0);
+                        //mT.update(percentage);
+                    }
+                }
+            }
 	}
     }
 

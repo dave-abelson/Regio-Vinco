@@ -56,6 +56,13 @@ public class RegioVincoGame extends PointAndClickGame {
     Label countryLabel;
     Label regionLabel;
     
+    Label congrats;
+    Label region;
+    Label score;
+    Label gameDur;
+    Label subReg;
+    Label incGuess;
+    
     // THESE ARE THE GUI LAYERS
     Pane backgroundLayer;
     Pane gameLayer;
@@ -130,6 +137,8 @@ public class RegioVincoGame extends PointAndClickGame {
          return loadImage(flagPath);
     }
     
+    
+    
     public void WorldLabel() throws InvalidXMLFileFormatException{
         this.reloadMap(worldLabel.getText(), true);
     }
@@ -162,7 +171,9 @@ public class RegioVincoGame extends PointAndClickGame {
             ((RegioVincoDataModel) data).regionsLeft.setVisible(false);
             ((RegioVincoDataModel) data).regionsLeftLabel.setVisible(false);
             ((RegioVincoDataModel) data).time.setVisible(false);
-            //change this
+            
+            
+            
             getAudio().stop("ANTHEM");
             getAudio().play(TRACKED_SONG, false);
             ((RegioVincoDataModel) data).notStarted();
@@ -190,7 +201,7 @@ public class RegioVincoGame extends PointAndClickGame {
 	    audio.loadAudio(TRACKED_SONG, TRACKED_FILE_NAME);
 	    audio.play(TRACKED_SONG, true);
 
-	    audio.loadAudio(AFGHAN_ANTHEM, MUSIC_FILE_NAME);
+	    audio.loadAudio("ANTHEM", MUSIC_FILE_NAME);
 	    audio.loadAudio(SUCCESS, SUCCESS_FILE_NAME);
 	    audio.loadAudio(FAILURE, FAILURE_FILE_NAME);
 	} catch (Exception e) {
@@ -264,6 +275,20 @@ public class RegioVincoGame extends PointAndClickGame {
         winScreen.setLayoutX(WIN_X);
         winScreen.setLayoutY(WIN_Y);
         winScreen.setStyle("-fx-background-color: YELLOW");
+        
+        congrats = new Label();
+        region = new Label();
+        score = new Label();
+        gameDur = new Label();
+        subReg = new Label();
+        incGuess = new Label();
+        
+        winScreen.getChildren().add(congrats);
+        winScreen.getChildren().add(region);
+        winScreen.getChildren().add(score);
+        winScreen.getChildren().add(gameDur);
+        winScreen.getChildren().add(subReg);
+        winScreen.getChildren().add(incGuess);
         
         winScreen.setVisible(false);
 	ImageView winView = addGUIImage(guiLayer, WIN_DISPLAY_TYPE, loadImage(WIN_DISPLAY_FILE_PATH), WIN_X, WIN_Y);
@@ -743,6 +768,13 @@ public class RegioVincoGame extends PointAndClickGame {
     public void updateGUI() {
 	// IF THE GAME IS OVER, DISPLAY THE APPROPRIATE RESPONSE
 	if (gameWon) {
+//            congrats = new Label();
+//            region = new Label();
+//            score = new Label();
+//            gameDur = new Label();
+//            subReg = new Label();
+//            incGuess = new Label();
+            
             RegioVincoDataModel model = new RegioVincoDataModel();
             //model.finishTime = model.time.getText();
             //clear layers
@@ -763,62 +795,66 @@ public class RegioVincoGame extends PointAndClickGame {
             
             //winning stat labels
             //WIN
-            Label congrats = new Label("Congratulations!");
+      
+            congrats.setText("Congratulations!");
             congrats.setFont(Font.font("Serif", FontWeight.BOLD, 40));
             congrats.setTextFill(Color.CRIMSON);
             congrats.setLayoutX(50);
             congrats.setLayoutY(80);
-            winScreen.getChildren().add(congrats);
+            //winScreen.getChildren().add(congrats);
             
-            Label region = new Label("Region: " + currentRegion);
+            region.setText("Region: " + currentRegion);
             region.setFont(Font.font("Serif", FontWeight.BOLD, 26));
             region.setTextFill(Color.DARKBLUE);
 //            region.setLayoutX(380);
 //            region.setLayoutY(300);
             region.setLayoutX(50);
             region.setLayoutY(175);
-            winScreen.getChildren().add(region);
+            //winScreen.getChildren().add(region);
             
             //calculate score
             int scoreNum = model.getScore();
             //scoreNum is greater than zero
-            Label score = new Label("Score: " + model.getScore());
+           
+            score.setText("Score: " + model.getScore());
             score.setFont(Font.font("Serif", FontWeight.BOLD, 26));
             score.setTextFill(Color.DARKBLUE);
 //            score.setLayoutX(380);
 //            score.setLayoutY(345);
             score.setLayoutX(50);
             score.setLayoutY(205);
-            winScreen.getChildren().add(score);
+            //winScreen.getChildren().add(score);
             
             //fix duation time
-            Label gameDur = new Label("Game Duration: " + model.getGameDuration());
+            
+            gameDur.setText("Game Duration: " + model.getGameDuration());
             gameDur.setFont(Font.font("Serif", FontWeight.BOLD, 26));
             gameDur.setTextFill(Color.DARKBLUE);
 //            gameDur.setLayoutX(380);
 //            gameDur.setLayoutY(390);
             gameDur.setLayoutX(50);
             gameDur.setLayoutY(235);
-            winScreen.getChildren().add(gameDur);
+            //winScreen.getChildren().add(gameDur);
             
             
-            Label subReg = new Label("Sub Regions: " + model.getSubRegionAmount());
+            subReg.setText("Sub Regions: " + model.getSubRegionAmount());
             subReg.setFont(Font.font("Serif", FontWeight.BOLD, 26));
             subReg.setTextFill(Color.DARKBLUE);
 //            subReg.setLayoutX(380);
 //            subReg.setLayoutY(435);
             subReg.setLayoutX(50);
             subReg.setLayoutY(265);
-            winScreen.getChildren().add(subReg);
+            //winScreen.getChildren().add(subReg);
             
-            Label incGuess = new Label("Incorrect Guesses: " + model.getIncorrectGuess());
+            
+            incGuess.setText("Incorrect Guesses: " + model.getIncorrectGuess());
             incGuess.setFont(Font.font("Serif", FontWeight.BOLD, 26));
             incGuess.setTextFill(Color.DARKBLUE);
 //            incGuess.setLayoutX(380);
 //            incGuess.setLayoutY(480);
             incGuess.setLayoutX(50);
             incGuess.setLayoutY(295);
-            winScreen.getChildren().add(incGuess);
+            //winScreen.getChildren().add(incGuess);
 	}
     }
 

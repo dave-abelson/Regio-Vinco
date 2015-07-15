@@ -14,6 +14,7 @@ public class MovableText {
     protected Text text;
     protected Label label;
     protected Image image;
+    protected String region;
     
     // USED FOR MANAGING NODE MOVEMENT
     protected double[] velocity = new double[2];
@@ -25,14 +26,16 @@ public class MovableText {
      * 
      * @param initText The text managed by this object.
      */
-    public MovableText(Text initText, Label initLabel) {
+    public MovableText(Text initText, Label initLabel, String initRegion) {
 	text = initText;
         label = initLabel;
+        region = initRegion;
     }
     
-    public MovableText(Text initText, Label initLabel, Image initImage) {
+    public MovableText(Text initText, Label initLabel, String initRegion, Image initImage) {
 	text = initText;
         label = initLabel;
+        region = initRegion;
         image = initImage;
     }
     
@@ -48,6 +51,14 @@ public class MovableText {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
     
     public void setText(Text initText) {
@@ -88,6 +99,8 @@ public class MovableText {
      * that called this method represents.
      */
     public void update(double percentage) {
+        
+        
 	// UPDATE POSITION changed from text to label
 	double x = label.translateXProperty().doubleValue();
 	label.translateXProperty().setValue(x + (velocity[0] * percentage));
