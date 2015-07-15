@@ -252,11 +252,11 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	    return;
 	}
         colorToSubRegionMappings.clear();
-        ((RegioVincoGame) game).reloadMap(clickedSubRegion);
+        ((RegioVincoGame) game).reloadMap(clickedSubRegion, true);
         
         System.out.println("selected");
     }
-    public void respondToMapSelection(RegioVincoGame game, int x, int y) throws UnsupportedAudioFileException, IOException {
+    public void respondToMapSelection(RegioVincoGame game, int x, int y){
         // THIS IS WHERE WE'LL CHECK TO SEE IF THE
 	// PLAYER CLICKED NO THE CORRECT SUBREGION
 	Color pixelColor = mapPixelReader.getColor(x, y);
@@ -341,23 +341,31 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                 
                 if(clickedSubRegion.equals("Africa") || clickedSubRegion.equals("Antarctica") || clickedSubRegion.equals("Asia") || clickedSubRegion.equals("Europe") || clickedSubRegion.equals("North America") || clickedSubRegion.equals("South America")){
                     try {
-                        game.getAudio().loadAudio("HARRY_POTTER", MUSIC_FILE_NAME);
-                        game.getAudio().play("HARRY_POTTER", true);
+                        game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
+                        game.getAudio().play("ANTHEM", true);
                     } catch (LineUnavailableException ex) {
                         
                     } catch (InvalidMidiDataException ex) {
                     } catch (MidiUnavailableException ex) {
+                    } catch (UnsupportedAudioFileException ex) {
+                        
+                    } catch (IOException ex) {
+                        
                     }
                     
                 }
                 else if(clickedSubRegion.equals("The World")){
                     try {
-                        game.getAudio().loadAudio("HARRY_POTTER", MUSIC_FILE_NAME);
-                        game.getAudio().play("HARRY_POTTER", true);
+                        game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
+                        game.getAudio().play("ANTHEM", true);
                     } catch (LineUnavailableException ex) {
                         
                     } catch (InvalidMidiDataException ex) {
                     } catch (MidiUnavailableException ex) {
+                    } catch (UnsupportedAudioFileException ex) {
+                        
+                    } catch (IOException ex) {
+                        
                     }
                 }
                 else{
@@ -369,6 +377,10 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
                     } catch (LineUnavailableException ex) {
                     } catch (InvalidMidiDataException ex) {
                     } catch (MidiUnavailableException ex) {
+                    } catch (UnsupportedAudioFileException ex) {
+                        
+                    } catch (IOException ex) {
+                        
                     }
                     
                 }

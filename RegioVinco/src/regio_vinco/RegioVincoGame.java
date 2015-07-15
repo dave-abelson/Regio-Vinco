@@ -131,15 +131,15 @@ public class RegioVincoGame extends PointAndClickGame {
     }
     
     public void WorldLabel() throws InvalidXMLFileFormatException{
-        this.reloadMap(worldLabel.getText());
+        this.reloadMap(worldLabel.getText(), true);
     }
     
     public void ContinentLabel() throws InvalidXMLFileFormatException{
-        this.reloadMap(continentLabel.getText());
+        this.reloadMap(continentLabel.getText(), true);
     }
     
     public void CountryLabel() throws InvalidXMLFileFormatException{
-        this.reloadMap(countryLabel.getText());
+        this.reloadMap(countryLabel.getText(), true);
         
     }
     
@@ -162,12 +162,16 @@ public class RegioVincoGame extends PointAndClickGame {
             ((RegioVincoDataModel) data).regionsLeft.setVisible(false);
             ((RegioVincoDataModel) data).regionsLeftLabel.setVisible(false);
             ((RegioVincoDataModel) data).time.setVisible(false);
-            getAudio().stop(AFGHAN_ANTHEM);
+            //change this
+            getAudio().stop("ANTHEM");
             getAudio().play(TRACKED_SONG, false);
+            ((RegioVincoDataModel) data).notStarted();
             winScreen.setVisible(false);
             winScreen.toBack();
+            continentRegion = null;
+            path = null;
             getGUIImages().get(MAP_TYPE).setVisible(true);
-            reloadMap("The World");
+            reloadMap("The World", true);
             reset();
             
         } else {
@@ -493,7 +497,7 @@ public class RegioVincoGame extends PointAndClickGame {
         enterButton.setOnAction(e-> {
            controller.processEnterGameRequest();
             try {
-                reloadMap("The World");
+                reloadMap("The World", true);
             } catch (InvalidXMLFileFormatException ex) {
                 Logger.getLogger(RegioVincoGame.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -818,7 +822,7 @@ public class RegioVincoGame extends PointAndClickGame {
 	}
     }
 
-    public void reloadMap(String regionMap) throws InvalidXMLFileFormatException {
+    public void reloadMap(String regionMap , boolean firstTime) throws InvalidXMLFileFormatException {
         
         currentRegion = regionMap;
         //String path;
@@ -890,8 +894,9 @@ public class RegioVincoGame extends PointAndClickGame {
         //System.out.println(XML_PATH + regionMap + XML_FILE_PATH);
         //xml.loadXMLDocument(XML_PATH + regionMap + XML_FILE_PATH, XML_PATH + "RegionData.xsd");
         //Document doc = xml.loadXMLDocument(XML_PATH + regionMap + XML_FILE_PATH, XML_PATH + "RegionData.xsd");
-        wdm.load(file);
-        
+        if(firstTime){
+            wdm.load(file);
+        }
         nameLabel.setText(regionMap);
         
         if(regionMap == "Africa" || regionMap == "Antarctica" || regionMap == "Asia" || regionMap.equals("Europe") || regionMap == "North America" || regionMap == "South America"){
