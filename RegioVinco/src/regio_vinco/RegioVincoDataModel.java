@@ -248,16 +248,17 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
             
             File score = new File(game.path  +  overSubRegion + "/" + overSubRegion + " Scores.txt");
             System.out.println(game.path);
-            try {
-                game.sc = new Scanner(score);
-                game.highScore.setText("High Score: " + game.sc.next() );
-                game.bestTime.setText("Best Time: " + game.sc.next());
-                game.leastGuesses.setText("Least Incorrect Guesses: " + game.sc.next());
+            if(score.exists()){
+                try {
+                    game.sc = new Scanner(score);
+                    game.highScore.setText("High Score: " + game.sc.next() );
+                    game.bestTime.setText("Best Time: " + game.sc.next());
+                    game.leastGuesses.setText("Least Incorrect Guesses: " + game.sc.next());
                 
-            } catch (FileNotFoundException ex) {
-                System.out.println("IO Exception");
+                } catch (FileNotFoundException ex) {
+                    System.out.println("File Not Found Exception");
+                }
             }
-            
             game.highScore.setVisible(true);
             //game.highScore.setText("High Score: ");
             
