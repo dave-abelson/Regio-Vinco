@@ -192,7 +192,10 @@ public class RegioVincoGame extends PointAndClickGame {
             this.bestTimeBottom.setVisible(true);
             this.leastGuessesBottom.setVisible(true);
             
-            continentRegion = null;
+            if(currentRegion.equals("Africa") || currentRegion.equals("Antarctica") || currentRegion.equals("Asia") || currentRegion.equals("Europe") || currentRegion.equals("North America") || currentRegion.equals("South America") || currentRegion.equals("Oceania")){
+                continentRegion = null;
+            }
+            
             
             getAudio().stop("ANTHEM");
             getAudio().play(TRACKED_SONG, false);
