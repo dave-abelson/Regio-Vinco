@@ -122,7 +122,7 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
     }
     
     public int getScore(){
-        int score = 1000;
+        int score = 10000;
         score = score - (int)timePassed/1000;
         score = score - (incorrectGuessesNum * 100);
         return score;
@@ -738,12 +738,13 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 	if (!subRegionStack.isEmpty()) {
 	    MovableText bottomOfStack = subRegionStack.get(0);
             bottomOfStack.getLabel().setStyle("-fx-background-color: rgb(" + 0  +", " + 255 + ", " + 0 + ")" );
-            double height = bottomOfStack.getImage().getHeight();
+            //double height = bottomOfStack.getImage().getHeight();
             //bottomOfStack.getText().setFill(Color.color(255.0 , 51.0, 0.0));
             bottomOfStack.getText().setFill(Color.color(255/255.0, 51/255.0, 0/255.0));
 	    double bottomY = bottomOfStack.getLabel().getLayoutY() + bottomOfStack.getLabel().getTranslateY();//fix stopping animation layout plus translation
 	    if(((RegioVincoGame)game).gameMode.equals("FLAG")){
                 //bottomY = GAME_HEIGHT - height;
+                double height = bottomOfStack.getImage().getHeight();
                 if (bottomY >= (GAME_HEIGHT - height)) {
                     double diffY = bottomY - (GAME_HEIGHT - height);
                     for (MovableText mT : subRegionStack) {

@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="RegioVinco.jar" size="28007" download="eager" />
+    <jar href="RegioVinco.jar" size="28045" download="eager" />
     <jar href="lib/AudioManager.jar" size="5195" download="eager" />
     <jar href="lib/The_PACG_Framework.jar" size="15439" download="eager" />
     <jar href="lib/WorldData.jar" size="12034" download="eager" />

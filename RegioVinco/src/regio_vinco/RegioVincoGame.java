@@ -179,10 +179,15 @@ public class RegioVincoGame extends PointAndClickGame {
             ((RegioVincoDataModel) data).notStarted();
             winScreen.setVisible(false);
             winScreen.toBack();
-            continentRegion = null;
-            path = null;
+            //continentRegion = null;
+            //path = null;
+            reloadMap(currentRegion, true);
             getGUIImages().get(MAP_TYPE).setVisible(true);
-            reloadMap("The World", true);
+            //reloadMap("The World", true);
+            worldLabel.setText("The World");
+            worldLabel.setVisible(true);
+            continentLabel.setVisible(true);
+            //reloadMap(currentRegion, true);
             reset();
             
         } else {
@@ -340,7 +345,7 @@ public class RegioVincoGame extends PointAndClickGame {
         countryLabel.setFont(Font.font("Serif", FontWeight.BOLD, 26));
         countryLabel.setTextFill(Color.YELLOW);
         //continentLabel.setText("The World");
-        countryLabel.setLayoutX(300);
+        countryLabel.setLayoutX(390);
         countryLabel.setLayoutY(630);
         
         regionLabel = new Label();
@@ -935,7 +940,7 @@ public class RegioVincoGame extends PointAndClickGame {
         }
         nameLabel.setText(regionMap);
         
-        if(regionMap == "Africa" || regionMap == "Antarctica" || regionMap == "Asia" || regionMap.equals("Europe") || regionMap == "North America" || regionMap == "South America"){
+        if(regionMap.equals("Africa") || regionMap.equals("Antarctica") || regionMap.equals("Asia") || regionMap.equals("Europe") || regionMap.equals("North America") || regionMap.equals("South America")){
             continentRegion = regionMap;
             continentLabel.setText(regionMap);
             continentLabel.setVisible(true);
