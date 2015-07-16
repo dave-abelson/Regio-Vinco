@@ -1,12 +1,15 @@
 package regio_vinco;
 
 import audio_manager.AudioManager;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Label;
@@ -54,6 +57,7 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
     
     //Label regionLabel = new Label();
     //ImageView flag = new ImageView();
+    
     
     long finishTime; 
     static long timePassed;
@@ -108,7 +112,13 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
         }
         //needs to accomodate leader, capital and flag
          MovableText lastOne = subRegionStack.peekFirst();
-            String lastRegion = lastOne.getRegion();
+         String lastRegion = "";
+         try{
+            lastRegion = lastOne.getRegion();
+         }
+         catch(Exception ex){
+             System.out.println();
+         }
             if(redSubRegions.contains(lastRegion)){
                 changeSubRegionColorOnMap(game, lastOne.getRegion(), subRegionToColorMappings.get(lastRegion));
             }
@@ -223,24 +233,41 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
         if(overSubRegion == null){
             //System.out.println(overSubRegion + " OverSubRegion");
             game.regionLabel.setVisible(false);
+            game.highScore.setVisible(false);
+            game.bestTime.setVisible(false);
+            game.leastGuesses.setVisible(false);
             game.flag.setVisible(false);
 //            game.flagLabel.setVisible(false);
 //            game.flagLabel.setStyle("-fx-background-color: transparent");
         }
-        if(pixelColor != Color.PINK){
+        else if(pixelColor != Color.PINK){
             game.flag.setVisible(true);
-//            game.flagLabel.setVisible(true);
-            //game.flagLabel.setStyle("-fx-background-color: white");
+
             game.regionLabel.setVisible(true);
             game.regionLabel.setText(overSubRegion);
-            game.regionLabel.setFont(Font.font("Serif", 25));
-            game.regionLabel.setTextFill(Color.WHITE);
-            game.regionLabel.setLayoutX(900);
-            game.regionLabel.setLayoutY(410);
             
-            //System.out.println(flagPath);
+            File score = new File(game.path  +  overSubRegion + "/" + overSubRegion + " Scores.txt");
+            System.out.println(game.path);
+            try {
+                game.sc = new Scanner(score);
+                game.highScore.setText("High Score: " + game.sc.next() );
+                game.bestTime.setText("Best Time: " + game.sc.next());
+                game.leastGuesses.setText("Least Incorrect Guesses: " + game.sc.next());
+                
+            } catch (FileNotFoundException ex) {
+                System.out.println("IO Exception");
+            }
             
-            //game.navigation.getChildren().add(flag);
+            game.highScore.setVisible(true);
+            //game.highScore.setText("High Score: ");
+            
+            
+            game.bestTime.setVisible(true);
+            //game.bestTime.setText("Best Time: ");
+            
+            game.leastGuesses.setVisible(true);
+            //game.leastGuesses.setText("Least Guesses: ");
+            
             
             game.flag.setLayoutX(940);
             game.flag.setLayoutY(205);
@@ -345,7 +372,7 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
 		game.getAudio().stop(TRACKED_SONG);
 		//game.getAudio().play(AFGHAN_ANTHEM, false);
                 
-                if(clickedSubRegion.equals("Africa") || clickedSubRegion.equals("Antarctica") || clickedSubRegion.equals("Asia") || clickedSubRegion.equals("Europe") || clickedSubRegion.equals("North America") || clickedSubRegion.equals("South America")){
+                if(clickedSubRegion.equals("Africa") || clickedSubRegion.equals("Antarctica") || clickedSubRegion.equals("Asia") || clickedSubRegion.equals("Europe") || clickedSubRegion.equals("North America") || clickedSubRegion.equals("South America") || clickedSubRegion.equals("Oceania")){
                     try {
                         if(game.musicPlaying){
                             game.getAudio().loadAudio("ANTHEM", MUSIC_FILE_NAME);
@@ -459,6 +486,9 @@ public class RegioVincoDataModel extends PointAndClickGameDataModel {
         
         if(((RegioVincoGame)game).gameOn){
             ((RegioVincoGame)game).regionLabel.setVisible(false);
+            ((RegioVincoGame)game).highScore.setVisible(false);
+            ((RegioVincoGame)game).bestTime.setVisible(false);
+            ((RegioVincoGame)game).leastGuesses.setVisible(false);
             ((RegioVincoGame)game).worldLabel.setVisible(false);
             ((RegioVincoGame)game).continentLabel.setVisible(false);
             ((RegioVincoGame)game).countryLabel.setVisible(false);

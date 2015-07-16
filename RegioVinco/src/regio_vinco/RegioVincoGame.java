@@ -1,11 +1,16 @@
 package regio_vinco;
 
 import audio_manager.AudioManager;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
@@ -56,6 +61,14 @@ public class RegioVincoGame extends PointAndClickGame {
     Label countryLabel;
     Label regionLabel;
     
+    Label highScore;
+    Label bestTime;
+    Label leastGuesses;
+    
+    Label highScoreBottom;
+    Label bestTimeBottom;
+    Label leastGuessesBottom;
+    
     Label congrats;
     Label region;
     Label score;
@@ -78,6 +91,10 @@ public class RegioVincoGame extends PointAndClickGame {
     
     ImageView flag;
     Label flagLabel;
+    
+    FileWriter fw;
+    BufferedWriter bw;
+    Scanner sc;
     
     String currentRegion;
     String continentRegion;
@@ -171,22 +188,24 @@ public class RegioVincoGame extends PointAndClickGame {
             ((RegioVincoDataModel) data).regionsLeft.setVisible(false);
             ((RegioVincoDataModel) data).regionsLeftLabel.setVisible(false);
             ((RegioVincoDataModel) data).time.setVisible(false);
+            this.highScoreBottom.setVisible(true);
+            this.bestTimeBottom.setVisible(true);
+            this.leastGuessesBottom.setVisible(true);
             
-            
+            continentRegion = null;
             
             getAudio().stop("ANTHEM");
             getAudio().play(TRACKED_SONG, false);
             ((RegioVincoDataModel) data).notStarted();
             winScreen.setVisible(false);
             winScreen.toBack();
-            //continentRegion = null;
-            //path = null;
             reloadMap(currentRegion, true);
             getGUIImages().get(MAP_TYPE).setVisible(true);
             //reloadMap("The World", true);
             worldLabel.setText("The World");
             worldLabel.setVisible(true);
             continentLabel.setVisible(true);
+            
             //reloadMap(currentRegion, true);
             reset();
             
@@ -331,14 +350,14 @@ public class RegioVincoGame extends PointAndClickGame {
         worldLabel.setTextFill(Color.YELLOW);
         worldLabel.setText("The World");
         worldLabel.setLayoutX(50);
-        worldLabel.setLayoutY(630);
+        worldLabel.setLayoutY(665);
         
         continentLabel = new Label();
         continentLabel.setFont(Font.font("Serif", FontWeight.BOLD, 26));
         continentLabel.setTextFill(Color.YELLOW);
         //continentLabel.setText("The World");
         continentLabel.setLayoutX(200);
-        continentLabel.setLayoutY(630);
+        continentLabel.setLayoutY(665);
         
         
         countryLabel = new Label();
@@ -346,9 +365,52 @@ public class RegioVincoGame extends PointAndClickGame {
         countryLabel.setTextFill(Color.YELLOW);
         //continentLabel.setText("The World");
         countryLabel.setLayoutX(390);
-        countryLabel.setLayoutY(630);
+        countryLabel.setLayoutY(665);
+        
+        highScoreBottom = new Label();
+        highScoreBottom.setFont(Font.font("Serif", FontWeight.BOLD, 26));
+        highScoreBottom.setTextFill(Color.YELLOW);
+        highScoreBottom.setText("HighScore: ");
+        highScoreBottom.setLayoutX(50);
+        highScoreBottom.setLayoutY(620);
+        
+        bestTimeBottom = new Label();
+        bestTimeBottom.setFont(Font.font("Serif", FontWeight.BOLD, 26));
+        bestTimeBottom.setTextFill(Color.YELLOW);
+        bestTimeBottom.setText("Best Time: ");
+        bestTimeBottom.setLayoutX(260);
+        bestTimeBottom.setLayoutY(620);
+        
+        leastGuessesBottom = new Label();
+        leastGuessesBottom.setFont(Font.font("Serif", FontWeight.BOLD, 26));
+        leastGuessesBottom.setTextFill(Color.YELLOW);
+        leastGuessesBottom.setText("Least Incorrect Guesses: ");
+        leastGuessesBottom.setLayoutX(460);
+        leastGuessesBottom.setLayoutY(620);
         
         regionLabel = new Label();
+        regionLabel.setFont(Font.font("Serif", 25));
+        regionLabel.setTextFill(Color.WHITE);
+        regionLabel.setLayoutX(900);
+        regionLabel.setLayoutY(410);
+        
+        highScore = new Label();
+        highScore.setFont(Font.font("Serif", 25));
+        highScore.setTextFill(Color.WHITE);
+        highScore.setLayoutX(900);
+        highScore.setLayoutY(430);
+        
+        bestTime = new Label();
+        bestTime.setFont(Font.font("Serif", 25));
+        bestTime.setTextFill(Color.WHITE);
+        bestTime.setLayoutX(900);
+        bestTime.setLayoutY(450);
+        
+        leastGuesses = new Label();
+        leastGuesses.setFont(Font.font("Serif", 25));
+        leastGuesses.setTextFill(Color.WHITE);
+        leastGuesses.setLayoutX(900);
+        leastGuesses.setLayoutY(470);
         
         //name mode button
         addGUIButton(navigation, NAME_MODE_TYPE, loadImage(NAME_MODE_BUTTON_FILE_PATH), NAME_MODE_X, NAME_MODE_Y);
@@ -394,9 +456,16 @@ public class RegioVincoGame extends PointAndClickGame {
         navigation.getChildren().add(nameLabel);
         navigation.getChildren().add(continentLabel);
         navigation.getChildren().add(countryLabel);
+        navigation.getChildren().add(highScoreBottom);
+        navigation.getChildren().add(bestTimeBottom);
+        navigation.getChildren().add(leastGuessesBottom);
         navigation.getChildren().add(regionLabel);
+        navigation.getChildren().add(highScore);
+        navigation.getChildren().add(bestTime);
+        navigation.getChildren().add(leastGuesses);
         navigation.getChildren().add(flagLabel);
         navigation.getChildren().add(flag);
+        
         
         flagLabel.setVisible(false);
         countryLabel.setVisible(false);
@@ -694,7 +763,7 @@ public class RegioVincoGame extends PointAndClickGame {
         //RegioVincoGame game;
 	//ImageView winView = guiImages.get(WIN_DISPLAY_TYPE);
 	//winView.setVisible(false);
-        System.out.println(gameOn + " : GAMEON");
+        //System.out.println(gameOn + " : GAMEON");
         gameOn = false;
         splash.setVisible(false);
         helpScreen.setVisible(false);
@@ -860,10 +929,39 @@ public class RegioVincoGame extends PointAndClickGame {
             incGuess.setLayoutX(50);
             incGuess.setLayoutY(295);
             //winScreen.getChildren().add(incGuess);
+            
+            File scoreFile;
+            
+            scoreFile = new File(path + currentRegion + " Scores.txt");
+            
+            try {
+                sc = new Scanner(scoreFile);
+            } catch (FileNotFoundException ex) {
+                System.out.println("File Not Found Exception");
+            }
+            
+            if(model.getScore() > Integer.parseInt(sc.next())){
+            
+                try {
+                    scoreFile.createNewFile();
+                    fw = new FileWriter(scoreFile.getAbsoluteFile());
+                    bw = new BufferedWriter(fw);
+                
+                    bw.write(model.getScore() + " "+  model.getGameDuration() + " " + model.getIncorrectGuess());
+                
+                    bw.close();
+                } catch (IOException ex) {
+                    System.out.println("IO Exception");
+                }
+            }
 	}
     }
 
     public void reloadMap(String regionMap , boolean firstTime) throws InvalidXMLFileFormatException {
+        File score;
+        
+        
+        highScoreBottom.setVisible(true);
         
         currentRegion = regionMap;
         //String path;
@@ -892,6 +990,22 @@ public class RegioVincoGame extends PointAndClickGame {
             guiButtons.get(FLAG_MODE_TYPE).setDisable(true);
             guiButtons.get(LEADER_MODE_TYPE).setDisable(true);
             guiButtons.get(NAME_MODE_TYPE).setDisable(false);
+        }
+        
+        score = new File(path + currentRegion + " Scores.txt");
+        
+        if(!(score.exists())){
+            try {
+                score.createNewFile();
+                fw = new FileWriter(score.getAbsoluteFile());
+                bw = new BufferedWriter(fw);
+                
+                bw.write("0 0 0");
+                
+                bw.close();
+            } catch (IOException ex) {
+                System.out.println("IO Exception");
+            }
         }
         
 	Image tempMapImage = loadImage(path + regionMap + MAPS_FILE_PATH);
@@ -940,7 +1054,7 @@ public class RegioVincoGame extends PointAndClickGame {
         }
         nameLabel.setText(regionMap);
         
-        if(regionMap.equals("Africa") || regionMap.equals("Antarctica") || regionMap.equals("Asia") || regionMap.equals("Europe") || regionMap.equals("North America") || regionMap.equals("South America")){
+        if(regionMap.equals("Africa") || regionMap.equals("Antarctica") || regionMap.equals("Asia") || regionMap.equals("Europe") || regionMap.equals("North America") || regionMap.equals("South America") || regionMap.equals("Oceania")){
             continentRegion = regionMap;
             continentLabel.setText(regionMap);
             continentLabel.setVisible(true);
@@ -989,6 +1103,17 @@ public class RegioVincoGame extends PointAndClickGame {
                     }
                 }
             }
+        
+            try {
+                sc = new Scanner(score);
+                highScoreBottom.setText("High Score: " + sc.next() );
+                bestTimeBottom.setText("Best Time: " + sc.next());
+                leastGuessesBottom.setText("Least Incorrect Guesses: " + sc.next());
+                
+            } catch (FileNotFoundException ex) {
+                System.out.println("IO Exception");
+            }
+            
         }
         
 //        Iterator<String> iteratorC = wdm.getAllRegions().keySet().iterator();

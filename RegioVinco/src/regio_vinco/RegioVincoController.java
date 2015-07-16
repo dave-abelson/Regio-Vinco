@@ -88,6 +88,9 @@ public class RegioVincoController implements KeyPressHook {
         game.gameMode = "NAME";
         game.gameLayer.setVisible(true);
         game.guiLayer.setVisible(true);
+        game.highScoreBottom.setVisible(false);
+        game.bestTimeBottom.setVisible(false);
+        game.leastGuessesBottom.setVisible(false);
        ((RegioVincoDataModel)game.getDataModel()).reset(game);
     }
     
@@ -97,6 +100,9 @@ public class RegioVincoController implements KeyPressHook {
         game.gameOn = true;
         game.gameLayer.setVisible(true);
         game.guiLayer.setVisible(true);
+        game.highScoreBottom.setVisible(false);
+        game.bestTimeBottom.setVisible(false);
+        game.leastGuessesBottom.setVisible(false);
        ((RegioVincoDataModel)game.getDataModel()).reset(game);
     }
     
@@ -105,6 +111,9 @@ public class RegioVincoController implements KeyPressHook {
         game.gameOn = true;
         game.gameLayer.setVisible(true);
         game.guiLayer.setVisible(true);
+        game.highScoreBottom.setVisible(false);
+        game.bestTimeBottom.setVisible(false);
+        game.leastGuessesBottom.setVisible(false);
        ((RegioVincoDataModel)game.getDataModel()).reset(game);
     }
     
@@ -113,6 +122,9 @@ public class RegioVincoController implements KeyPressHook {
         game.gameOn = true;
         game.gameLayer.setVisible(true);
         game.guiLayer.setVisible(true);
+        game.highScoreBottom.setVisible(false);
+        game.bestTimeBottom.setVisible(false);
+        game.leastGuessesBottom.setVisible(false);
        ((RegioVincoDataModel)game.getDataModel()).reset(game);
     }
     

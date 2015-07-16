@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<region name="Oceania">
+  <sub_region red="252" green="252" blue="252" name="Australia" capital="Canberra" leader="Tony Abbott" />
+  <sub_region red="250" green="250" blue="250" name="New Zealand" capital="Wellington" leader = "John Key" />
+  <sub_region red="248" green="248" blue="248" name="Papua New Guinea" capital="Port Moresby" leader="Peter O'Neill" />
+  <sub_region red="244" green="244" blue="244" name="Solomon Islands" capital="Honiara" leader= "Manasseh Sogavare" />
+  <sub_region red="242" green="242" blue="242" name="Vanuatu" capital="Port Vila" leader="Baldwin Lonsdale" />
+  <sub_region red="240" green="240" blue="240" name="New Caledonia" capital="Noumea" leader="Francois Hollande" />
+  <sub_region red="238" green="238" blue="238" name="Fiji" capital="Suva" leader="Epeli Nailatikau" />
+</region>
+
