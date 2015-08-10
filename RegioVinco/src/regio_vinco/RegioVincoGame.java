@@ -195,10 +195,11 @@ public class RegioVincoGame extends PointAndClickGame {
             if(currentRegion.equals("Africa") || currentRegion.equals("Antarctica") || currentRegion.equals("Asia") || currentRegion.equals("Europe") || currentRegion.equals("North America") || currentRegion.equals("South America") || currentRegion.equals("Oceania")){
                 continentRegion = null;
             }
-            
-            
             getAudio().stop("ANTHEM");
-            getAudio().play(TRACKED_SONG, false);
+            if(musicPlaying){
+                //getAudio().stop("ANTHEM");
+                getAudio().play(TRACKED_SONG, false);
+            }
             ((RegioVincoDataModel) data).notStarted();
             winScreen.setVisible(false);
             winScreen.toBack();
